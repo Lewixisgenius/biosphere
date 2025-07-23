@@ -9,9 +9,8 @@ export default function MapView() {
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 const customIcon = new L.Icon({
-  iconUrl: "/marker-icon.png",
-  shadowUrl: "/marker-shadow.png",
-  iconSize: [25, 41],
+  iconUrl: "/marker.png",
+  iconSize: [30, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
