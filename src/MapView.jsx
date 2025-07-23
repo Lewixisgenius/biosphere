@@ -148,6 +148,7 @@ const customIcon = new L.Icon({
             <Marker
               key={species.id}
               position={[species.lat, species.lng]}
+              icon={customIcon}
               eventHandlers={{
                 click: () => onSelectSpecies(species),
               }}
