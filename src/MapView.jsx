@@ -8,6 +8,11 @@ export default function App() {
   const [wikiSummary, setWikiSummary] = useState(null);
   const [loadingSummary, setLoadingSummary] = useState(false);
 
+const customIcon = new L.Icon({
+  iconUrl: "/custom-marker.png",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+});
 
   useEffect(() => {
     const fetchAll = async () => {
