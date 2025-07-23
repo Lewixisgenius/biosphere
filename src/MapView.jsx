@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+// Marker ikonunu tanımla
+const customIcon = new L.Icon({
+  iconUrl: "/marker-icon.png",
+  shadowUrl: "/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 export default function App() {
   const [speciesList, setSpeciesList] = useState([]);
@@ -8,22 +19,14 @@ export default function App() {
   const [wikiSummary, setWikiSummary] = useState(null);
   const [loadingSummary, setLoadingSummary] = useState(false);
 
-const customIcon = new L.Icon({
-  iconUrl: "/custom-marker.png",
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-});
-
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        // Karasal türler
         const res1 = await fetch(
           "https://api.inaturalist.org/v1/observations?per_page=100&geo=true"
         );
         const data1 = await res1.json();
 
-        // Okyanus türleri ve balıklar (taxon_id=47158)
         const res2 = await fetch(
           "https://api.inaturalist.org/v1/observations?taxon_id=47158&per_page=200&geo=true&nelat=90&nelng=180&swlat=-90&swlng=-180"
         );
@@ -57,12 +60,10 @@ const customIcon = new L.Icon({
     fetchAll();
   }, []);
 
-  // Türkçe Wikipedia özet çekme
   const fetchWikiSummary = async (title) => {
     setLoadingSummary(true);
     setWikiSummary(null);
     try {
-      // Türkçe Wikipedia API'si
       const response = await fetch(
         `https://tr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`
       );
@@ -107,22 +108,21 @@ const customIcon = new L.Icon({
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
           {speciesList.map((species) => (
-<Marker
-  key={species.id}
-  position={[species.lat, species.lng]}
-  icon={customIcon}
-  eventHandlers={{
-    click: () => onSelectSpecies(species),
-  }}
->
-  <Popup>{species.name}</Popup>
-</Marker>
-
+            <Marker
+              key={species.id}
+              position={[species.lat, species.lng]}
+              icon={customIcon}
+              eventHandlers={{
+                click: () => onSelectSpecies(species),
+              }}
+            >
+              <Popup>{species.name}</Popup>
+            </Marker>
           ))}
         </MapContainer>
       </div>
 
-      {/* Sağdaki Bilgi Kartı */}
+      {/* Bilgi Paneli */}
       <div
         style={{
           width: "25%",
