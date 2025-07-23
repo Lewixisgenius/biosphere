@@ -101,15 +101,17 @@ export default function App() {
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           />
           {speciesList.map((species) => (
-            <Marker
-              key={species.id}
-              position={[species.lat, species.lng]}
-              eventHandlers={{
-                click: () => onSelectSpecies(species),
-              }}
-            >
-              <Popup>{species.name}</Popup>
-            </Marker>
+<Marker
+  key={species.id}
+  position={[species.lat, species.lng]}
+  icon={customIcon}
+  eventHandlers={{
+    click: () => onSelectSpecies(species),
+  }}
+>
+  <Popup>{species.name}</Popup>
+</Marker>
+
           ))}
         </MapContainer>
       </div>
