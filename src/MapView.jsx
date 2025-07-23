@@ -5,7 +5,7 @@ import L from "leaflet";
 
 // Marker ikonunu tanımla
 const customIcon = new L.Icon({
-  iconUrl: "/marker-icon.png",
+  iconUrl: "/marker.png",
   shadowUrl: "/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
