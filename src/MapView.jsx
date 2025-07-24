@@ -1,27 +1,13 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import SearchBar from "./SearchBar"; // 🔁 Import
 
-export default function MapView() {
+export default function App() {
   const [speciesList, setSpeciesList] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState(null);
   const [wikiSummary, setWikiSummary] = useState(null);
   const [loadingSummary, setLoadingSummary] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-const customIcon = new L.Icon({
-  iconUrl: "/marker.png",
-  iconSize: [30, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -47,9 +33,7 @@ const customIcon = new L.Icon({
             lat: item.geojson.coordinates[1],
             lng: item.geojson.coordinates[0],
             photo:
-              item.photos && item.photos.length > 0
-                ? item.photos[0].url.replace("square", "medium")
-                : null,
+              item.photos?.[0]?.url.replace("square", "medium") || null,
             wikipedia_url: item.taxon?.wikipedia_url || null,
             observed_on: item.observed_on || "Tarih yok",
             location: item.place_guess || "Konum yok",
@@ -95,50 +79,17 @@ const customIcon = new L.Icon({
       ? [speciesList[0].lat, speciesList[0].lng]
       : [20, 0];
 
-  const renderSpeciesCard = () => (
-    <div>
-      <h2 style={{ marginBottom: "0.5rem", fontSize: "1.2rem", fontWeight: "bold" }}>
-        {selectedSpecies.name}
-      </h2>
-      <h4 style={{ fontStyle: "italic", color: "#aaa", marginTop: 0 }}>
-        {selectedSpecies.scientificName}
-      </h4>
-
-      {selectedSpecies.photo && (
-        <img
-          src={selectedSpecies.photo}
-          alt={selectedSpecies.name}
-          style={{ width: "100%", borderRadius: 8, marginBottom: "1rem" }}
-        />
-      )}
-
-      <p><strong>Konum:</strong> {selectedSpecies.location}</p>
-      <p><strong>Gözlem Tarihi:</strong> {selectedSpecies.observed_on}</p>
-
-      <p style={{ whiteSpace: "pre-line" }}>
-        {loadingSummary ? "Özet yükleniyor..." : wikiSummary}
-      </p>
-
-      {selectedSpecies.wikipedia_url && (
-        <p>
-          <a
-            href={selectedSpecies.wikipedia_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#4ea8de", textDecoration: "underline" }}
-          >
-            Vikipedi'de Oku
-          </a>
-        </p>
-      )}
-    </div>
-  );
-
   return (
-    <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", height: "100vh", backgroundColor: "#121212", color: "#eee" }}>
-      
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        backgroundColor: "#121212",
+        color: "#eee",
+      }}
+    >
       {/* Harita */}
-      <div style={{ width: isMobile ? "100%" : "75%", height: isMobile ? "100%" : "100%" }}>
+      <div style={{ width: "75%", height: "100%" }}>
         <MapContainer center={center} zoom={3} style={{ height: "100%", width: "100%" }}>
           <TileLayer
             attribution="&copy; OpenStreetMap contributors"
@@ -148,7 +99,6 @@ const customIcon = new L.Icon({
             <Marker
               key={species.id}
               position={[species.lat, species.lng]}
-              icon={customIcon}
               eventHandlers={{
                 click: () => onSelectSpecies(species),
               }}
@@ -159,55 +109,65 @@ const customIcon = new L.Icon({
         </MapContainer>
       </div>
 
-      {/* Masaüstü Bilgi Kartı */}
-      {!isMobile && (
-        <div style={{
+      {/* Sağdaki Bilgi Kartı + Search */}
+      <div
+        style={{
           width: "25%",
           padding: "1rem",
           overflowY: "auto",
           borderLeft: "1px solid #333",
           backgroundColor: "#1e1e1e",
-          boxSizing: "border-box"
-        }}>
-          {selectedSpecies ? renderSpeciesCard() : <p>Haritadan bir tür seçin.</p>}
-        </div>
-      )}
+          boxSizing: "border-box",
+          position: "relative",
+        }}
+      >
+        {/* 🔍 Arama Kutusu */}
+        <SearchBar onSelect={onSelectSpecies} />
 
-      {/* Mobil Popup Kart */}
-      {isMobile && selectedSpecies && (
-        <div style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "65%",
-          backgroundColor: "#1e1e1e",
-          color: "#fff",
-          zIndex: 1000,
-          borderTopLeftRadius: "16px",
-          borderTopRightRadius: "16px",
-          padding: "1rem",
-          overflowY: "auto",
-          animation: "slideUp 0.3s ease-out"
-        }}>
-          <button
-            onClick={() => setSelectedSpecies(null)}
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "16px",
-              fontSize: "1.5rem",
-              background: "none",
-              border: "none",
-              color: "#aaa",
-              cursor: "pointer"
-            }}
-          >
-            ×
-          </button>
-          {renderSpeciesCard()}
-        </div>
-      )}
+        {/* Tür Bilgileri */}
+        {selectedSpecies ? (
+          <div>
+            <h2 style={{ marginBottom: "0.5rem" }}>{selectedSpecies.name}</h2>
+            <h4 style={{ fontStyle: "italic", color: "#aaa", marginTop: 0 }}>
+              {selectedSpecies.scientificName}
+            </h4>
+
+            {selectedSpecies.photo && (
+              <img
+                src={selectedSpecies.photo}
+                alt={selectedSpecies.name}
+                style={{ width: "100%", borderRadius: 8, marginBottom: "1rem" }}
+              />
+            )}
+
+            <p>
+              <strong>Konum:</strong> {selectedSpecies.location}
+            </p>
+            <p>
+              <strong>Gözlem Tarihi:</strong> {selectedSpecies.observed_on}
+            </p>
+
+            <p style={{ whiteSpace: "pre-line" }}>
+              {loadingSummary ? "Özet yükleniyor..." : wikiSummary}
+            </p>
+
+            {selectedSpecies.wikipedia_url && (
+              <p>
+                <a
+                  href={selectedSpecies.wikipedia_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#4ea8de" }}
+                >
+                  Vikipedi'de Oku
+                </a>
+              </p>
+            )}
+          </div>
+        ) : (
+          <p>Haritadan bir tür seçin ya da yukarıdan arayın.</p>
+        )}
+      </div>
     </div>
   );
 }
