@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import SearchBar from "./SearchBar"; // 🔁 Import
+import SearchBar from "./SearchBar"; 
 
 export default function App() {
   const [speciesList, setSpeciesList] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState(null);
   const [wikiSummary, setWikiSummary] = useState(null);
   const [loadingSummary, setLoadingSummary] = useState(false);
-
+const customIcon = new L.Icon({
+  iconUrl: "/marker.png",
+  iconSize: [30, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
   useEffect(() => {
     const fetchAll = async () => {
       try {
@@ -88,7 +94,7 @@ export default function App() {
         color: "#eee",
       }}
     >
-      {/* Harita */}
+      
       <div style={{ width: "75%", height: "100%" }}>
         <MapContainer center={center} zoom={3} style={{ height: "100%", width: "100%" }}>
           <TileLayer
@@ -99,6 +105,7 @@ export default function App() {
             <Marker
               key={species.id}
               position={[species.lat, species.lng]}
+              icon={customIcon}
               eventHandlers={{
                 click: () => onSelectSpecies(species),
               }}
@@ -109,7 +116,7 @@ export default function App() {
         </MapContainer>
       </div>
 
-      {/* Sağdaki Bilgi Kartı + Search */}
+      
       <div
         style={{
           width: "25%",
@@ -121,10 +128,10 @@ export default function App() {
           position: "relative",
         }}
       >
-        {/* 🔍 Arama Kutusu */}
+        
         <SearchBar onSelect={onSelectSpecies} />
 
-        {/* Tür Bilgileri */}
+       
         {selectedSpecies ? (
           <div>
             <h2 style={{ marginBottom: "0.5rem" }}>{selectedSpecies.name}</h2>
