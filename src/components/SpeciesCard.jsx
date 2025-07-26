@@ -127,7 +127,7 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
             textTransform: 'uppercase',
             letterSpacing: '0.5px'
           }}>
-            Taksonomi
+            Taxonomy
           </h4>
           <div style={{ 
             display: 'grid', 
@@ -158,7 +158,7 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
           textTransform: 'uppercase',
           letterSpacing: '0.5px'
         }}>
-          Konum Bilgileri
+          Location Information
         </h4>
         <div style={{ 
           backgroundColor: '#2a2a2a',
@@ -167,11 +167,11 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
           fontSize: '14px'
         }}>
           <div style={{ marginBottom: '4px' }}>
-            <strong style={{ color: '#888' }}>Konum:</strong> {species.location}
+            <strong style={{ color: '#888' }}>Location:</strong> {species.location}
           </div>
           {species.observed_on && (
             <div>
-              <strong style={{ color: '#888' }}>Gözlem Tarihi:</strong> {species.observed_on}
+              <strong style={{ color: '#888' }}>Observation Date:</strong> {species.observed_on}
             </div>
           )}
         </div>
@@ -185,7 +185,7 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
           textTransform: 'uppercase',
           letterSpacing: '0.5px'
         }}>
-          Açıklama
+          Description
         </h4>
         <div style={{ 
           backgroundColor: '#2a2a2a',
@@ -195,10 +195,10 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
           fontSize: '14px'
         }}>
           {loadingSummary ? (
-            <div style={{ color: '#888', fontStyle: 'italic' }}>Özet yükleniyor...</div>
+            <div style={{ color: '#888', fontStyle: 'italic' }}>Loading...</div>
           ) : (
             <div style={{ whiteSpace: 'pre-line' }}>
-              {wikiSummary || species.description || "Bu tür hakkında henüz açıklama bulunmuyor."}
+              {wikiSummary || species.description || "There is no information available about this species yet."}
             </div>
           )}
         </div>
@@ -230,7 +230,7 @@ const SpeciesCard = ({ species, onClose, isMobile = false }) => {
             onMouseOver={(e) => e.target.style.backgroundColor = '#3d8bc7'}
             onMouseOut={(e) => e.target.style.backgroundColor = '#4ea8de'}
           >
-            📖 Vikipedi
+            📖 Wikipedia
           </a>
         )}
         
