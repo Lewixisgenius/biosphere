@@ -149,7 +149,7 @@ export default function MapView() {
   if (isLoading) {
     return (
       <div style={loadingStyle}>
-        <div>Harita yükleniyor...</div>
+        <div>Map Loading...</div>
       </div>
     );
   }
@@ -244,17 +244,17 @@ export default function MapView() {
                 color: "#888"
               }}>
                 <div style={{ fontSize: "18px", marginBottom: "8px" }}>
-                  🗺️ Biyosfer Haritası
+                  🗺️ Biosphere Map
                 </div>
                 <div style={{ fontSize: "14px" }}>
-                  Haritadan bir tür seçin veya yukarıdan arayın
+                  Select a species from the map or search above
                 </div>
                 <div style={{ 
                   fontSize: "12px", 
                   marginTop: "16px",
                   color: "#666"
                 }}>
-                  {speciesList.length} tür bulundu
+                  {speciesList.length} species found
                 </div>
               </div>
             ) : null}
