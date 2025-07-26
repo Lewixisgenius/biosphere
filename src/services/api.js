@@ -119,24 +119,24 @@ export const fetchSpeciesFromAPI = async () => {
       .filter((item) => item.geojson && item.geojson.coordinates)
       .map((item) => ({
         id: item.id,
-        name: item.species_guess || "Bilinmeyen Tür",
-        scientificName: item.taxon?.name || "Bilinmeyen Bilimsel İsim",
+        name: item.species_guess || "Unknown Species",
+        scientificName: item.taxon?.name || "Unknown Scientific Name",
         location: [item.geojson.coordinates[1], item.geojson.coordinates[0]],
         image: item.photos?.[0]?.url.replace("square", "medium") || null,
         description: item.description || null,
         taxonomy: {
-          kingdom: item.taxon?.ancestors?.find(a => a.rank === 'kingdom')?.name || "Bilinmiyor",
-          phylum: item.taxon?.ancestors?.find(a => a.rank === 'phylum')?.name || "Bilinmiyor",
-          class: item.taxon?.ancestors?.find(a => a.rank === 'class')?.name || "Bilinmiyor",
-          order: item.taxon?.ancestors?.find(a => a.rank === 'order')?.name || "Bilinmiyor",
-          family: item.taxon?.ancestors?.find(a => a.rank === 'family')?.name || "Bilinmiyor",
-          genus: item.taxon?.ancestors?.find(a => a.rank === 'genus')?.name || "Bilinmiyor",
-          species: item.taxon?.name || "Bilinmiyor"
+          kingdom: item.taxon?.ancestors?.find(a => a.rank === 'kingdom')?.name || "null",
+          phylum: item.taxon?.ancestors?.find(a => a.rank === 'phylum')?.name || "null",
+          class: item.taxon?.ancestors?.find(a => a.rank === 'class')?.name || "null",
+          order: item.taxon?.ancestors?.find(a => a.rank === 'order')?.name || "null",
+          family: item.taxon?.ancestors?.find(a => a.rank === 'family')?.name || "null",
+          genus: item.taxon?.ancestors?.find(a => a.rank === 'genus')?.name || "null",
+          species: item.taxon?.name || "null"
         },
         wikipedia_url: item.taxon?.wikipedia_url || null,
         inaturalist_url: `https://www.inaturalist.org/taxa/${item.taxon?.id}` || null,
-        observed_on: item.observed_on || "Tarih yok",
-        location_name: item.place_guess || "Konum yok"
+        observed_on: item.observed_on || "null",
+        location_name: item.place_guess || "null"
       }));
   } catch (error) {
     console.error("API'den veri çekme hatası:", error);
@@ -162,21 +162,21 @@ export const searchSpecies = async (query) => {
         null,
       image: item.default_photo?.medium_url || null,
       taxonomy: {
-        kingdom: item.ancestors?.find(a => a.rank === 'kingdom')?.name || "Bilinmiyor",
-        phylum: item.ancestors?.find(a => a.rank === 'phylum')?.name || "Bilinmiyor",
-        class: item.ancestors?.find(a => a.rank === 'class')?.name || "Bilinmiyor",
-        order: item.ancestors?.find(a => a.rank === 'order')?.name || "Bilinmiyor",
-        family: item.ancestors?.find(a => a.rank === 'family')?.name || "Bilinmiyor",
-        genus: item.ancestors?.find(a => a.rank === 'genus')?.name || "Bilinmiyor",
-        species: item.name || "Bilinmiyor"
+        kingdom: item.ancestors?.find(a => a.rank === 'kingdom')?.name || "null",
+        phylum: item.ancestors?.find(a => a.rank === 'phylum')?.name || "null",
+        class: item.ancestors?.find(a => a.rank === 'class')?.name || "null",
+        order: item.ancestors?.find(a => a.rank === 'order')?.name || "null",
+        family: item.ancestors?.find(a => a.rank === 'family')?.name || "null",
+        genus: item.ancestors?.find(a => a.rank === 'genus')?.name || "null",
+        species: item.name || "null"
       },
       wikipedia_url: item.wikipedia_url || null,
       inaturalist_url: `https://www.inaturalist.org/taxa/${item.id}` || null,
-      observed_on: "Arama sonucu",
-      location_name: "Bilinmiyor"
+      observed_on: "Results",
+      location_name: "null"
     }));
   } catch (error) {
-    console.error("Arama hatası:", error);
+    console.error("Error:", error);
     return [];
   }
 };
@@ -187,7 +187,7 @@ export const getAllSpecies = async () => {
     const apiData = await fetchSpeciesFromAPI();
     return [...mockSpeciesData, ...apiData];
   } catch (error) {
-    console.error("Veri çekme hatası:", error);
+    console.error("data error:", error);
     return mockSpeciesData;
   }
 };
