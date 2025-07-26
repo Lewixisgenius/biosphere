@@ -4,7 +4,14 @@ import "leaflet/dist/leaflet.css";
 import SearchBar from "./SearchBar";
 import SpeciesCard from "./components/SpeciesCard";
 import { getAllSpecies } from "./services/api";
-
+import L from "leaflet";
+const customIcon = new L.Icon({
+  iconUrl: "/marker.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 // Custom hook to handle map bounds
 function MapBounds({ speciesList }) {
   const map = useMap();
@@ -170,6 +177,7 @@ export default function MapView() {
               <Marker
                 key={species.id}
                 position={species.location}
+                icon={customIcon}
                 eventHandlers={{
                   click: () => handleMarkerClick(species),
                 }}
