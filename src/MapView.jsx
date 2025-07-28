@@ -8,6 +8,17 @@ import FavoritesPanel from "./components/FavoritesPanel";
 import ObservationForm from "./components/ObservationForm";
 import { getAllSpecies, filterSpecies, submitObservation, exportToCSV, exportToJSON, generateShareableURL, parseSharedURL } from "./services/api";
 import { useLanguage } from "./contexts/LanguageContext";
+import L from "leaflet";
+
+// Public klasöründen ikonları ayarla
+const customIcon = new L.Icon({
+  iconUrl: "/marker-icon.png",
+  shadowUrl: "/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 // Custom hook to handle map bounds
 function MapBounds({ speciesList }) {
