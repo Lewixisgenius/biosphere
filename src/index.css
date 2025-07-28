@@ -1,0 +1,120 @@
+html, body, #root, .app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #eee;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Leaflet customizations */
+.leaflet-container {
+  background-color: #121212;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1e1e1e;
+  color: #eee;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.leaflet-popup-tip {
+  background: #1e1e1e;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+  font-size: 14px;
+}
+
+.leaflet-control-attribution {
+  background-color: rgba(30, 30, 30, 0.8) !important;
+  color: #888 !important;
+}
+
+.leaflet-control-attribution a {
+  color: #4ea8de !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  html, body, #root, .app {
+    font-size: 14px;
+  }
+  
+  .leaflet-popup-content {
+    margin: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #4ea8de;
+  outline-offset: 2px;
+}
+
+/* Button and link styles */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+a {
+  color: #4ea8de;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #3d8bc7;
+  text-decoration: underline;
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
