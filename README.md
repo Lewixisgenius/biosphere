@@ -148,8 +148,8 @@ Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## 📞 İletişim
 
-- **Proje**: [GitHub Repository](https://github.com/username/biosphere)
-- **E-posta**: your.email@example.com
+- **Proje**: [GitHub Repository](https://github.com/Lewixisgenius/biosphere)
+- **E-posta**: yigitdwsouza@gmail.com
 
 ---
 
