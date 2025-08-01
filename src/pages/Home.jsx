@@ -27,7 +27,9 @@ const Home = () => {
   };
 
   const heroStyle = {
-    background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+    background: 'url(./earth.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
     padding: isMobile ? '40px 20px' : '80px 40px',
     textAlign: 'center',
     position: 'relative',
