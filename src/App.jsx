@@ -9,6 +9,7 @@ import SpeciesDetail from './pages/SpeciesDetail';
 import UserProfile from './components/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Data from './pages/data';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
               <Route path="/profile/:userId" element={<UserProfile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/data" element={<Data />} />
             </Routes>
           </div>
         </Router>
