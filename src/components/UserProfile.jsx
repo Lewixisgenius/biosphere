@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import Navigation from './Navigation';
+import '../assets/user.css'
 
 const UserProfile = ({ isMobile = false }) => {
   const { t } = useLanguage();
@@ -45,15 +46,16 @@ const UserProfile = ({ isMobile = false }) => {
   }
 
   return (
-    <div style={{ padding: 0 }}>
+    <div className='all' style={{ padding: 0 }}>
                 <Navigation />
+                <div className="userr">
       <h2>{profile.username}</h2>
-      <img src={profile.avatar} alt="Avatar" width={100} style={{ borderRadius: '50%' }} />
+      <img className='imggg' src={profile.avatar} alt="Avatar" width={100} style={{ borderRadius: '50%' }} />
       <p>{profile.bio}</p>
       <p>{t('Email  ')}: {profile.email}</p>
       <p>{t('Locaiton  ')}: {profile.location}</p>
       <p>{t('Date of Joining  ')}: {profile.joinDate}</p>
-      {/* Diğer alanları buraya ekle */}
+      {/* Diğer alanları buraya ekle */}</div>
     </div>
   );
 };
